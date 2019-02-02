@@ -53,7 +53,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoViewHolder> implem
     public String getTimeString(String timestamp)
     {
         Calendar c= Calendar.getInstance();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm aaa ");
 
          timestamp= formatter.format(c.getTime());
         return timestamp;

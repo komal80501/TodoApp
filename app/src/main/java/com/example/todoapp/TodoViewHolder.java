@@ -38,7 +38,6 @@ public class TodoViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public void onClick(View v) {
         if(v.getId()==R.id.cardView){
             View view = LayoutInflater.from(v.getContext()).inflate(R.layout.todopopup,null);
-            TextView edit=view.findViewById(R.id.edit);
             TextView delete=view.findViewById(R.id.delete);
             TextView share=view.findViewById(R.id.share);
 
@@ -47,12 +46,8 @@ public class TodoViewHolder extends RecyclerView.ViewHolder implements View.OnCl
             mPopupWindow = builder.create();
             mPopupWindow.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             mPopupWindow.show();
-            edit.setOnClickListener(this);
             delete.setOnClickListener(this);
             share.setOnClickListener(this);
-        }
-        else if (v.getId()==R.id.edit){
-
         }
 
         else if (v.getId()==R.id.delete){

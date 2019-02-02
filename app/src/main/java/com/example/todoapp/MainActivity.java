@@ -1,5 +1,7 @@
 package com.example.todoapp;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements TodoDeleteListner {
 
@@ -47,6 +50,15 @@ public class MainActivity extends AppCompatActivity implements TodoDeleteListner
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
 
+        //AlarmService
+        AlarmManager alarmManager=(AlarmManager) getSystemService(ALARM_SERVICE);
+        Calendar calendar= Calendar.getInstance();
+        calendar.add(Calendar.SECOND,5);
+
+        Intent intent= new Intent("komal.mane.action.DISPLAY_NOTIFICATION");
+
+        PendingIntent broadcast = PendingIntent.getBroadcast(this,100, new Intent(""),PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),broadcast);
 
     }
 
@@ -65,7 +77,10 @@ public class MainActivity extends AppCompatActivity implements TodoDeleteListner
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_aboutUs) {
+
+            Intent in =new Intent(MainActivity.this,AboutUsActivity.class);
+            startActivity(in);
             return true;
         }
 
@@ -77,4 +92,5 @@ public class MainActivity extends AppCompatActivity implements TodoDeleteListner
         adapter.setmTodoTaskList(db.getTodoTasks());
         adapter.notifyDataSetChanged();
     }
+
 }

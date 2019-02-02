@@ -17,6 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -30,12 +31,13 @@ public class AddToDoActivity extends AppCompatActivity {
     private ImageButton closeImageButton;
     private EditText editTextTitle,editTextDescription,editTextDate,editTextTime;
     private SwitchCompat switchCompat;
-
+    private TextView textViewMsg,textViewTime;
     private AlertDialog mTimeDialog;
     private TimePicker mTimePicker;
     private CardView mOkButton;
     private CardView mCancelButton;
     private DatePicker datePicker;
+    public SimpleDateFormat stf;
 
     private  final Calendar myCalendar = Calendar.getInstance();
 
@@ -52,10 +54,9 @@ public class AddToDoActivity extends AppCompatActivity {
         editTextDescription=(EditText) findViewById(R.id.todoDescription);
         editTextDate=(EditText) findViewById(R.id.newTodoDateEditText);
         editTextTime=(EditText) findViewById(R.id.newTodoTimeEditText);
-        closeImageButton=(ImageButton) findViewById(R.id.btn_close);
-        switchCompat=(SwitchCompat) findViewById(R.id.toDoDateSwitchCompat);
 
-
+        textViewMsg=findViewById(R.id.newToDoDateTimeReminderTextView);
+        textViewTime=findViewById(R.id.newTimeMsg);
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -109,10 +110,11 @@ public class AddToDoActivity extends AppCompatActivity {
         });
     }
 
-    private void updateTime() {
-        SimpleDateFormat stf = new SimpleDateFormat("hh:mm aa");
+    public void updateTime() {
+      stf = new SimpleDateFormat("hh:mm aa");
 
         editTextTime.setText(stf.format(myCalendar.getTimeInMillis()));
+        textViewTime.setText("  "+stf.format(myCalendar.getTimeInMillis()));
     }
 
 
@@ -121,6 +123,7 @@ public class AddToDoActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         editTextDate.setText(sdf.format(myCalendar.getTime()));
+        textViewMsg.setText("Reminder set For : "+sdf.format(myCalendar.getTime()));
     }
 
     private void saveData() {
