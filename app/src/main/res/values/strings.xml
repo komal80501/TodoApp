@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TodoApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="no_to_do">You Dont Have Any ToDo</string>
+</resources>
