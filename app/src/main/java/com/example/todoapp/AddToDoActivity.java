@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
 
@@ -50,6 +51,7 @@ public class AddToDoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_to_do);
 
+
         editTextTitle= (EditText) findViewById(R.id.toDoTitle);
         editTextDescription=(EditText) findViewById(R.id.todoDescription);
         editTextDate=(EditText) findViewById(R.id.newTodoDateEditText);
@@ -57,6 +59,12 @@ public class AddToDoActivity extends AppCompatActivity {
 
         textViewMsg=findViewById(R.id.newToDoDateTimeReminderTextView);
         textViewTime=findViewById(R.id.newTimeMsg);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        editTextDate.setText(dateFormat.format(new Date()));
+        dateFormat = new SimpleDateFormat("dd MMM yyyy");
+        editTextDate.setText(dateFormat.format(new Date()));
+
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -74,9 +82,13 @@ public class AddToDoActivity extends AppCompatActivity {
         editTextDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(AddToDoActivity.this, date, myCalendar
+                DatePickerDialog datePickerDialog=   new DatePickerDialog(AddToDoActivity.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
+                datePickerDialog.show();
+
+
 
             }
         });
@@ -119,6 +131,7 @@ public class AddToDoActivity extends AppCompatActivity {
 
 
     private void updateDate() {
+
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
@@ -127,6 +140,8 @@ public class AddToDoActivity extends AppCompatActivity {
     }
 
     private void saveData() {
+
+
         TodoDatabaseHelper db = new TodoDatabaseHelper(this);
 
         String todoTitle = editTextTitle.getText().toString();
@@ -149,6 +164,14 @@ public class AddToDoActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(todoDate)){
             editTextDate.setError("required");
             editTextDate.requestFocus();
+            return;
+        }
+
+
+
+        if (TextUtils.isEmpty(todoTime)){
+            editTextTime.setError("required");
+            editTextTime.requestFocus();
             return;
         }
 
